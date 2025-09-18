@@ -1,0 +1,10 @@
+When Node first imports ./dbConnection.js, it immediately executes the code inside.
+At that time, dotenv.config() hasn’t run yet → so process.env.MONGO_URI is still undefined.
+That’s why mongoose.connect(mongoURI, …) throws the error.
+
+You need to load .env before importing/using anything that depends on it.
+Option A (best):
+Move dotenv.config() to the very top of your entry point file before any imports that depend on env vars.
+
+Option B:
+Or, move dotenv.config() inside dbConnection.js itself:
